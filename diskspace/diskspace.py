@@ -53,7 +53,7 @@ def bytes_to_readable(blocks):
     ''' Returns a string made from number of blocks
         
         :param blocks: number of blocks
-        :type blocks: int
+        :type blocks: int, >=0
 
         :rtype: string
     '''
@@ -74,22 +74,24 @@ def print_tree(file_tree, file_tree_node, path, largest_size, total_size,
     ''' Print the tree of files recursively
         
         :param file_tree: dictionary that contain the file tree 
-        :type file_tree: dict
+        :type file_tree: dict(str:  *)
 
         :param file_tree_node: node in which the iteration is
-        :type file_tree_node: dict
+        :type file_tree_node: dict(str: *)
 
         :param path: path made to reach this point
         :type path: string
 
         :param largest_size: largest size to be printed
-        :type largest_size: int
+        :type largest_size: int, >=0
 
         :param total_size: sum of all storage in the tree
-        :type total_size: int
+        :type total_size: int, >=0
 
         :param depth: depth of the tree since root
-        :type depth: int
+        :type depth: int, >=0
+
+        :rtype: None
     '''
     percentage = int(file_tree_node['size'] / float(total_size) * 100)
 
@@ -117,10 +119,12 @@ def show_space_list(directory='.', depth=-1, order=True):
         :type directory: string
 
         :param depth: depth to where analysis will be done
-        :type depth: int
+        :type depth: int, >=0
 
         :param order: change the display order
         :type order: bool
+
+        :rtype: None
     '''
     abs_directory = os.path.abspath(directory)
 
