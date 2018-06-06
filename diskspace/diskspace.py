@@ -36,13 +36,27 @@ args = parser.parse_args()
 
 
 # ==== Disk Space ====
-@contract(command='string', returns='string')
+
+@contract
 def subprocess_check_output(command):
+    ''' Checks subprocess output returned by command
+        :param command: command that generate some subprocess
+        :type command: string
+
+        :rtype: string
+    '''
     return subprocess.check_output(command.strip().split(' '))
 
 
-@contract(blocks='int')
+@contract
 def bytes_to_readable(blocks):
+    ''' Returns a string made from number of blocks
+        
+        :param blocks: number of blocks
+        :type blocks: int
+
+        :rtype: string
+    '''
     byts = blocks * 512
     readable_bytes = byts
     count = 0
@@ -54,10 +68,29 @@ def bytes_to_readable(blocks):
     return '{:.2f}{}'.format(round(byts/(1024.0**count), 2), labels[count])
 
 
-@contract(file_tree='dict', file_tree_node='dict', path='string',
-          largest_size='int', total_size='int')
+@contract
 def print_tree(file_tree, file_tree_node, path, largest_size, total_size,
                depth=0):
+    ''' Print the tree of files recursively
+        
+        :param file_tree: dictionary that contain the file tree 
+        :type file_tree: dict
+
+        :param file_tree_node: node in which the iteration is
+        :type file_tree_node: dict
+
+        :param path: path made to reach this point
+        :type path: string
+
+        :param largest_size: largest size to be printed
+        :type largest_size: int
+
+        :param total_size: sum of all storage in the tree
+        :type total_size: int
+
+        :param depth: depth of the tree since root
+        :type depth: int
+    '''
     percentage = int(file_tree_node['size'] / float(total_size) * 100)
 
     if percentage < args.hide:
@@ -76,8 +109,19 @@ def print_tree(file_tree, file_tree_node, path, largest_size, total_size,
                        total_size, depth + 1)
 
 
-@contract(directory='string', depth='int', order='bool')
+@contract
 def show_space_list(directory='.', depth=-1, order=True):
+    ''' Print the final output to the user
+
+        :param directory: directory to be analyzed 
+        :type directory: string
+
+        :param depth: depth to where analysis will be done
+        :type depth: int
+
+        :param order: change the display order
+        :type order: bool
+    '''
     abs_directory = os.path.abspath(directory)
 
     cmd = 'du '
